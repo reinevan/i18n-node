@@ -58,6 +58,7 @@ module.exports = (function () {
     queryParameter,
     register,
     updateFiles,
+    updateCatalogs,
     syncFiles;
 
   // public exports
@@ -117,6 +118,10 @@ module.exports = (function () {
 
     // write new locale information to disk
     updateFiles = typeof opt.updateFiles === 'boolean' ? opt.updateFiles : true;
+
+    // write new locale information to disk
+    updateCatalogs =
+      typeof opt.updateCatalogs === 'boolean' ? opt.updateCatalogs : true;
 
     // sync locale information accros all files
     syncFiles = typeof opt.syncFiles === 'boolean' ? opt.syncFiles : false;
@@ -491,7 +496,7 @@ module.exports = (function () {
 
   // Write back to the catalog with updated translations.
   i18n.setCatalog = function i18nSetCatalog(locale) {
-    write(locale);
+    write(locale, true);
   };
 
   i18n.getCatalog = function i18nGetCatalog(object, locale) {
@@ -1177,11 +1182,11 @@ module.exports = (function () {
   /**
    * try writing a file in a created directory
    */
-  var write = function (locale) {
+  var write = function (locale, updateCatalog) {
     var stats, target, tmp;
 
     // don't write new locale information to disk if updateFiles isn't true
-    if (!updateFiles) {
+    if (!updateCatalog && !updateFiles) {
       return;
     }
 
