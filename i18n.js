@@ -58,7 +58,6 @@ module.exports = (function () {
     queryParameter,
     register,
     updateFiles,
-    updateCatalogs,
     syncFiles;
 
   // public exports
@@ -118,10 +117,6 @@ module.exports = (function () {
 
     // write new locale information to disk
     updateFiles = typeof opt.updateFiles === 'boolean' ? opt.updateFiles : true;
-
-    // write new locale information to disk
-    updateCatalogs =
-      typeof opt.updateCatalogs === 'boolean' ? opt.updateCatalogs : true;
 
     // sync locale information accros all files
     syncFiles = typeof opt.syncFiles === 'boolean' ? opt.syncFiles : false;
@@ -950,6 +945,10 @@ module.exports = (function () {
 
     var accessor = localeAccessor(locale, singular);
     var mutator = localeMutator(locale, singular);
+
+    if (!updateFiles) {
+      return accessor();
+    }
 
     if (plural) {
       if (accessor() == null) {
