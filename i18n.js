@@ -230,12 +230,12 @@ module.exports = (function () {
     }
 
     // postprocess to get compatible to plurals
-    if (typeof msg === 'object' && msg.one) {
+    if (msg && typeof msg === 'object' && msg.one) {
       msg = msg.one;
     }
 
     // in case there is no 'one' but an 'other' rule
-    if (typeof msg === 'object' && msg.other) {
+    if (msg && typeof msg === 'object' && msg.other) {
       msg = msg.other;
     }
 
